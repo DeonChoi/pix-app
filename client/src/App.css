@@ -1,0 +1,40 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: 'Baloo Tamma 2', cursive;
+}
+
+nav {
+  font-size: 1.75rem;
+}
+
+.navbar-brand {
+  margin-right: 0.75rem;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+main {
+  margin: 0rem 2rem;
+}
+
+.search-bar {
+  width: auto!important;
+}
+
+.search-button i {
+  position: relative;
+  top: 2px;
+}
+
+@media only screen and (max-width: 450px) {
+  .navbar-toggler {
+    order: 2;
+  }
+  .search-form {
+    order: 3;
+    width: 100%;
+  }
+}
