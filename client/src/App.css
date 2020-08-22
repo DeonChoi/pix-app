@@ -29,6 +29,28 @@ main {
   top: 2px;
 }
 
+#topButton {
+  display: none;
+  position: fixed;
+  top: 0rem;
+  right: 0rem;
+  z-index: 99;
+  outline: none;
+  cursor: pointer;
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+  font-size: 1.5rem;
+  border-radius: 0;
+  width: 100%;
+  border: none;
+
+}
+
+#topButton:hover {
+  background-color: white;
+  color: #007bff;
+  border: none;
+}
+
 @media only screen and (max-width: 450px) {
   .navbar-toggler {
     order: 2;
@@ -36,5 +58,9 @@ main {
   .search-form {
     order: 3;
     width: 100%;
+  }
+
+  main {
+    margin: 0;
   }
 }

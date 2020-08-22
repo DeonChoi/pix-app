@@ -79,7 +79,6 @@
     font-size: 2rem;
     z-index: 3;
     border-radius: 10px;
-    /*border: 1px solid black;*/
 }
 #image-modal {
     position: fixed; /* Stay in place */
@@ -92,11 +91,6 @@
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.95); /* Black w/ opacity */
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
-    /*flex-direction: column;*/
-
 }
 
 #image-modal img{
@@ -110,6 +104,7 @@
 .modal-buttons {
     display: flex;
     justify-content: center;
+    margin-top: 2rem;
     margin-bottom: 1rem;
 }
 
@@ -152,6 +147,9 @@
     }
     .home-search-bar {
         width: 75%!important;
+    }
+    .card-img-overlay {
+        flex-direction: row!important;
     }
 }
 

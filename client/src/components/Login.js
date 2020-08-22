@@ -2,6 +2,8 @@ import React, {useContext, useState} from 'react';
 import { GoogleLogin } from "react-google-login";
 import {Context} from "./Context";
 
+import axios from 'axios';
+
 const Login = (props) => {
 
     const {GOOGLE_CLIENT_ID} = useContext(Context)
@@ -44,18 +46,19 @@ const Login = (props) => {
             password
         };
         console.log(userLogin)
-        // await axios.post('/user/login', userLogin)
-        //     .then( res => {
-        //         // console.log(res);
-        //         localStorage.setItem('auth-token', res.data);
-        //         console.log('Logged In');
-        //         props.history.push('..');
-        //         window.location.reload();
-        //     })
-        //     .catch( err => {
-        //         console.error(err);
-        //         setLoginError('Invalid Email or Password');
-        //     });
+        await axios.post('http://localhost:5000/login', userLogin)
+            .then( res => {
+                console.log(res);
+                // console.log(res);
+                // localStorage.setItem('auth-token', res.data);
+                // console.log('Logged In');
+                // props.history.push('..');
+                // window.location.reload();
+            })
+            .catch( err => {
+                console.error(err);
+                // setLoginError('Invalid Email or Password');
+            });
     };
 
     return (

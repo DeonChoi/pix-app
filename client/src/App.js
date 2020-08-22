@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Context} from "./components/Context";
 
 import './App.css';
@@ -17,6 +17,18 @@ import Logo from './images/logo.png';
 import axios from "axios";
 
 const App = () => {
+
+    useEffect( () => {
+        const topButton = document.getElementById("topButton");
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 2000) {
+                console.log('nice')
+                topButton.style.display = "block";
+            } else {
+                topButton.style.display = "none";
+            }
+        })
+    }, [])
 
     const [accessToken, setAccessToken] = useState(localStorage.getItem('auth-token'))
     const [googleAccessToken, setGoogleAccessToken] = useState(localStorage.getItem('auth-token'))
@@ -39,6 +51,10 @@ const App = () => {
         sessionStorage.setItem('search', search)
         e.preventDefault();
         window.location.href=('/search')
+    }
+
+    const goToTop = () => {
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
   return (
@@ -66,13 +82,13 @@ const App = () => {
                     {
                         (accessToken === null || accessToken === undefined) || (googleAccessToken === null || googleAccessToken === undefined)
                         ?<div className="collapse navbar-collapse" id="navbarSupportedContent" style={{justifyContent:"flex-end"}}>
-                                {/*<Link to={'/'} className="nav-link text-primary">search <span className="sr-only">(current)</span></Link>*/}
+                                {/*<Link to={'/search'} className="nav-link text-primary">search <span className="sr-only">(current)</span></Link>*/}
                                 <Link to={'/collections'} className="nav-link text-primary">collections <span className="sr-only">(current)</span></Link>
                                 <Link to={'/register'} className="nav-link text-primary">register <span className="sr-only">(current)</span></Link>
                                 <Link to={'/login'} className="nav-link text-primary">login <span className="sr-only">(current)</span></Link>
                         </div>
                         :<div className="collapse navbar-collapse" id="navbarSupportedContent" style={{justifyContent:"flex-end"}}>
-                                {/*<Link to={'/'} className="nav-link text-primary">search <span className="sr-only">(current)</span></Link>*/}
+                                {/*<Link to={'/search'} className="nav-link text-primary">search <span className="sr-only">(current)</span></Link>*/}
                                 <Link to={'/collections'} className="nav-link text-primary">collections <span className="sr-only">(current)</span></Link>
                                 <Link to={'/logout'} className="nav-link text-primary">logout <span className="sr-only">(current)</span></Link>
                         </div>
@@ -102,6 +118,10 @@ const App = () => {
                     <Route path='/login' component={Login} />
                     <Route path='/logout' component={Logout} />
                 </Context.Provider>
+
+                <button onClick={goToTop} id='topButton' className='btn btn-primary' title='Go To Top'>
+                    <i className="fas fa-arrow-up"></i>
+                </button>
             </main>
         </Router>
   );
