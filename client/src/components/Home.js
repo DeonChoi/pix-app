@@ -169,7 +169,7 @@ const Home = () => {
     return (
         <>
             <div className="jumbotron jumbotron-fluid d-flex flex-column align-items-center justify-content-center w-100" style={{backgroundImage: `url(${myBackground})`}}>
-                <h1 className="display-4 text-left">pix</h1>
+                <h1 className="display-4 text-center">pix</h1>
                 <p className='lead text-center'>Search for free high-resolution photos.</p>
 
                 {

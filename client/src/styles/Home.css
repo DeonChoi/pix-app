@@ -156,6 +156,12 @@
     }
 }
 
+@media only screen and (max-width: 510px) {
+    .image {
+        border-radius: 0px!important;
+    }
+}
+
 @media only screen and (max-width: 768px) {
     .jumbotron p:nth-child(3), .jumbotron a{
         display: none!important;

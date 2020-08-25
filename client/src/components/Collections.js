@@ -154,7 +154,7 @@ const Collections = () => {
                 ?
 
                     <div className="jumbotron jumbotron-fluid h-100 d-flex flex-column align-items-center justify-content-center w-100" style={{backgroundImage: `url(${myBackground})`}}>
-                        <h1 className="display-4 text-left">pix</h1>
+                        <h1 className="display-4 text-center">pix</h1>
                         <p className='lead text-center'>You must register and login to view your collections.</p>
                         <div className='d-flex w-100 justify-content-center'>
                             <a className="btn btn-primary mr-2" href="/register">register</a>
@@ -199,7 +199,7 @@ const Collections = () => {
                             :
                             <>
                                 <div className="jumbotron jumbotron-fluid h-100 d-flex flex-column align-items-center justify-content-center w-100" style={{backgroundImage: `url(${myBackground})`}}>
-                                    <h1 className="display-4 text-left">Collection Empty</h1>
+                                    <h1 className="display-4 text-center">Collection Empty</h1>
                                     <p className='lead text-center'>Try searching for some photos</p>
                                     <form className="form-inline mt-3 mb-3 search-form has-search justify-content-center w-100" onSubmit={getSearch}>
                                         <input className="form-control mr-2 home-search-bar" type="search" placeholder="Search for free high-resolution photos" aria-label="Search"  onChange={handleSearch} value={search} />
