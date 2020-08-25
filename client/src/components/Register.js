@@ -41,8 +41,8 @@ const Register = (props) => {
         }
         // console.log(response)
     }
-    const handleLoginFailure = response => {
-        alert('Failed to log in')
+    const handleRegisterFailure = response => {
+        console.log('Failed to register')
     }
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -106,7 +106,7 @@ const Register = (props) => {
                 clientId={ GOOGLE_CLIENT_ID }
                 buttonText='Sign up with Google'
                 onSuccess={ register }
-                onFailure={ handleLoginFailure }
+                onFailure={ handleRegisterFailure }
                 cookiePolicy={ 'single_host_origin' }
                 responseType='code,token'
             />

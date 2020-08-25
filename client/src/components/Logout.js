@@ -24,7 +24,7 @@ const Logout = (props) => {
     }
 
     const handleLogoutFailure = response => {
-        alert('Failed to log out')
+        console.log('Failed to log out')
     }
     return(
         <GoogleLogout

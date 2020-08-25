@@ -35,7 +35,7 @@ const Login = (props) => {
         // console.log(response)
     }
     const handleLoginFailure = response => {
-        alert('Failed to log in')
+        console.log('Failed to log in')
     }
 
     const handleEmail = (e) => {
