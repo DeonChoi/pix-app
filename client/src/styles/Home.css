@@ -114,6 +114,21 @@
     margin: 3rem;
 }
 
+.downloading {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.95)!important;
+}
+
 .home-search-bar {
     width: 20%!important;;
 }

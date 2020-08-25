@@ -5,9 +5,6 @@ import {Context} from './Context'
 
 const Logout = (props) => {
 
-    const {isLoggedIn, setIsLoggedIn} = useContext(Context)
-    const {accessToken, setAccessToken} = useContext(Context)
-    const {googleAccessToken, setGoogleAccessToken} = useContext(Context)
     const {GOOGLE_CLIENT_ID} = useContext(Context)
 
     useEffect( () => {
@@ -16,13 +13,14 @@ const Logout = (props) => {
     })
 
     const logout = response => {
-        setIsLoggedIn(false)
-        setAccessToken()
-        setGoogleAccessToken()
         console.log(response)
         props.history.push('..')
-        localStorage.removeItem('auth-token');
-        window.location.reload();
+        // localStorage.removeItem('google-auth-token');
+        // localStorage.removeItem('google-email');
+        // localStorage.removeItem('auth-token');
+        // localStorage.removeItem('email');
+        localStorage.clear();
+        // window.location.reload();
     }
 
     const handleLogoutFailure = response => {

@@ -6,17 +6,9 @@ import {Context} from './Context'
 const GoogleBtn = (props) => {
     const {GOOGLE_CLIENT_ID} = useContext(Context)
 
-    const {isLoggedIn, setIsLoggedIn} = useContext(Context)
-    const {accessToken, setAccessToken} = useContext(Context)
-    const {googleAccessToken, setGoogleAccessToken} = useContext(Context)
-
     const login = response => {
         if (response.accessToken) {
-            setIsLoggedIn(true)
-            setAccessToken(response.accessToken)
-            setGoogleAccessToken(response.accessToken)
-            localStorage.setItem('auth-token', response.accessToken);
-
+            localStorage.setItem('google-auth-token', response.accessToken);
             props.props.history.push('..')
             // window.location.reload()
 
@@ -25,11 +17,8 @@ const GoogleBtn = (props) => {
     }
 
     const logout = response => {
-        setIsLoggedIn(false)
-        setAccessToken()
-        setGoogleAccessToken()
         console.log(response)
-        localStorage.removeItem('auth-token');
+        localStorage.removeItem('google-auth-token');
         localStorage.clear();
         // sessionStorage.clear();
         props.history.push('..')
@@ -50,7 +39,7 @@ const GoogleBtn = (props) => {
         <>
 
             {
-                isLoggedIn
+                (localStorage.getItem('auth-token') !== null || localStorage.getItem('google-auth-token') !== null)
                     ? <GoogleLogout
                         clientId={ GOOGLE_CLIENT_ID }
                         // buttonText='Logout'
@@ -66,11 +55,6 @@ const GoogleBtn = (props) => {
                         responseType='code,token'
                     />
             }
-            {/*{*/}
-            {/*    accessToken*/}
-            {/*        ? <h5>Your Access Token: <br/> {accessToken}</h5>*/}
-            {/*        : null*/}
-            {/*}*/}
 
         </>
     )

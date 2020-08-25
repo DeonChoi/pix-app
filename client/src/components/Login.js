@@ -11,20 +11,26 @@ const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const {isLoggedIn, setIsLoggedIn} = useContext(Context)
-    const {accessToken, setAccessToken} = useContext(Context)
-    const {googleAccessToken, setGoogleAccessToken} = useContext(Context)
+    const login = async (response) => {
+        if (response.tokenId) {
+            const userLogin = {
+                email: response.profileObj.email,
+            }
+            console.log(response)
+            await axios.post('http://localhost:5000/google/login', userLogin)
+                .then( res => {
+                    console.log(res);
+                    console.log('Logged In');
+                    localStorage.setItem('google-auth-token', response.tokenId);
+                    localStorage.setItem('google-email', response.profileObj.email);
+                    props.history.push('..');
+                    // window.location.reload();
+                })
+                .catch( err => console.error(err));
 
-    const login = response => {
-        if (response.accessToken) {
-            setIsLoggedIn(true)
-            setAccessToken(response.accessToken)
-            setGoogleAccessToken(response.accessToken)
-            localStorage.setItem('auth-token', response.accessToken);
             console.log('logging in')
+            console.log(response.profileObj.email)
             props.history.push('..')
-            // window.location.reload()
-
         }
         console.log(response)
     }
@@ -45,20 +51,16 @@ const Login = (props) => {
             email,
             password
         };
-        console.log(userLogin)
-        await axios.post('http://localhost:5000/login', userLogin)
+        await axios.post('http://localhost:5000/user/login', userLogin)
             .then( res => {
                 console.log(res);
-                // console.log(res);
-                // localStorage.setItem('auth-token', res.data);
-                // console.log('Logged In');
-                // props.history.push('..');
+                console.log('Logged In');
+                localStorage.setItem('auth-token', res.data.token);
+                localStorage.setItem('email', res.data.email)
+                props.history.push('..');
                 // window.location.reload();
             })
-            .catch( err => {
-                console.error(err);
-                // setLoginError('Invalid Email or Password');
-            });
+            .catch( err => console.error(err));
     };
 
     return (

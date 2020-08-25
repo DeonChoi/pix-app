@@ -51,16 +51,37 @@ main {
   border: none;
 }
 
-@media only screen and (max-width: 450px) {
+.dropdown-menu {
+  font-size: 1.5rem;
+  min-width: 100%;
+}
+
+@media only screen and (max-width: 350px) {
+  .search-bar {
+    width: 60%!important;
+    margin-left: 0!important;
+  }
+}
+
+@media only screen and (max-width: 510px) {
   .navbar-toggler {
     order: 2;
   }
   .search-form {
     order: 3;
-    width: 100%;
+    min-width: 100%;
+  }
+  .search-bar {
+    width: 80%!important;
   }
 
   main {
     margin: 0;
+  }
+}
+
+@media only screen and (max-width: 825px) {
+  .navbar-brand-link {
+    margin-right: 1.5rem!important;
   }
 }

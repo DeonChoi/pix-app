@@ -14,15 +14,12 @@ import Logout from "./components/Logout";
 
 import Logo from './images/logo.png';
 
-import axios from "axios";
-
 const App = () => {
 
     useEffect( () => {
         const topButton = document.getElementById("topButton");
         window.addEventListener('scroll', () => {
             if (window.scrollY > 2000) {
-                console.log('nice')
                 topButton.style.display = "block";
             } else {
                 topButton.style.display = "none";
@@ -30,15 +27,12 @@ const App = () => {
         })
     }, [])
 
-    const [accessToken, setAccessToken] = useState(localStorage.getItem('auth-token'))
-    const [googleAccessToken, setGoogleAccessToken] = useState(localStorage.getItem('auth-token'))
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
-
     const [images, setImages] = useState([])
     const [search, setSearch] = useState(sessionStorage.getItem('search') ? sessionStorage.getItem('search') : '')
     const [lastSearch, setLastSearch] = useState();
     const [fetching, setFetching] = useState(false);
 
+    const PIXABAY_KEY = '17990511-4817078a8e0b7192cbe1dc270';
     const ACCESS_KEY = 'IJ1yZh7pdWGg1Xf_GDvalE5UdrAOJJAUmCeyhS8BmoA';
     const GOOGLE_CLIENT_ID = `743017633638-hm8ik5mcrkpu1kstfjdajacs7m8mrsav.apps.googleusercontent.com`
 
@@ -62,14 +56,14 @@ const App = () => {
         <Router basename={'/'}>
             <header>
 
-                <nav className="navbar navbar-expand-md navbar-light bg-light">
-                    <Link to={'/'} className="text-primary mr-5">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                    <Link to={'/'} className="text-primary mr-5 navbar-brand-link">
                         <img src={Logo} alt="" className='navbar-brand' height='45'/>
                         pix
                     </Link>
 
                     <form className="form-inline mt-3 mb-3 search-form has-search justify-content-center" onSubmit={getSearch}>
-                        <input className="form-control mr-2 search-bar" type="search" placeholder="Search photos" aria-label="Search" onChange={handleSearch} value={search} />
+                        <input className="form-control search-bar" type="search" placeholder="Search photos" aria-label="Search" onChange={handleSearch} value={search} />
                         <button className="btn btn-outline-primary my-2 my-sm-0 search-button" type="submit"><i className="fas fa-search"></i></button>
                     </form>
 
@@ -80,17 +74,25 @@ const App = () => {
                     </button>
 
                     {
-                        (accessToken === null || accessToken === undefined) || (googleAccessToken === null || googleAccessToken === undefined)
-                        ?<div className="collapse navbar-collapse" id="navbarSupportedContent" style={{justifyContent:"flex-end"}}>
-                                {/*<Link to={'/search'} className="nav-link text-primary">search <span className="sr-only">(current)</span></Link>*/}
-                                <Link to={'/collections'} className="nav-link text-primary">collections <span className="sr-only">(current)</span></Link>
-                                <Link to={'/register'} className="nav-link text-primary">register <span className="sr-only">(current)</span></Link>
-                                <Link to={'/login'} className="nav-link text-primary">login <span className="sr-only">(current)</span></Link>
+                        (localStorage.getItem('auth-token') !== null || localStorage.getItem('google-auth-token') !== null)
+                        ?
+                        <div className="collapse navbar-collapse" id="navbarSupportedContent" style={{justifyContent:"flex-end"}}>
+                            <Link to={'/collections'} className="nav-link text-primary">collections <span className="sr-only">(current)</span></Link>
+                            <div className="nav-item dropdown">
+                                <Link className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {localStorage.getItem('google-email') || localStorage.getItem('email')}
+                                </Link>
+                                <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <Link to={'/logout'} className="nav-link text-primary d-flex justify-content-center">logout <span className="sr-only">(current)</span></Link>
+                                </div>
+                            </div>
                         </div>
-                        :<div className="collapse navbar-collapse" id="navbarSupportedContent" style={{justifyContent:"flex-end"}}>
-                                {/*<Link to={'/search'} className="nav-link text-primary">search <span className="sr-only">(current)</span></Link>*/}
-                                <Link to={'/collections'} className="nav-link text-primary">collections <span className="sr-only">(current)</span></Link>
-                                <Link to={'/logout'} className="nav-link text-primary">logout <span className="sr-only">(current)</span></Link>
+                        :
+                        <div className="collapse navbar-collapse" id="navbarSupportedContent" style={{justifyContent:"flex-end"}}>
+                            <Link to={'/collections'} className="nav-link text-primary">collections <span className="sr-only">(current)</span></Link>
+                            <Link to={'/register'} className="nav-link text-primary">register <span className="sr-only">(current)</span></Link>
+                            <Link to={'/login'} className="nav-link text-primary">login <span className="sr-only">(current)</span></Link>
                         </div>
                     }
 
@@ -101,14 +103,11 @@ const App = () => {
 
             <main>
                 <Context.Provider value={{
-                    accessToken, setAccessToken,
-                    googleAccessToken, setGoogleAccessToken,
-                    isLoggedIn, setIsLoggedIn,
                     images, setImages,
                     search, setSearch,
                     lastSearch, setLastSearch,
                     fetching, setFetching,
-                    ACCESS_KEY,
+                    ACCESS_KEY, PIXABAY_KEY,
                     GOOGLE_CLIENT_ID
                 }}>
                     <Route exact path='/' component={Home} />

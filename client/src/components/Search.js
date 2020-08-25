@@ -6,14 +6,12 @@ import {Context} from './Context'
 import '../styles/Home.css';
 
 import axios from 'axios';
+import Downloading from "../images/downloading.gif";
 
 const Search = () => {
 
-    const {accessToken, setAccessToken} = useContext(Context);
-    const {googleAccessToken, setGoogleAccessToken} = useContext(Context);
-
     const {ACCESS_KEY} = useContext(Context);
-    // const SECRET_KEY = 'bJpAoKrCybwlHwx9dpTvdSQWuWPVbFehyVS_MiGXbmU';
+    const {PIXABAY_KEY} = useContext(Context);
     const {fetching, setFetching} = useContext(Context);
     const {images, setImages} = useContext(Context);
     const {search, setSearch} = useContext(Context);
@@ -25,8 +23,16 @@ const Search = () => {
     const [linkCopyShow, setLinkCopyShow] = useState(false);
     const [imageSaveShow, setImageSaveShow] = useState(false);
 
+    const [saveModalMessage, setSaveModalMessage] = useState('');
+    const [myBackground, setMyBackground] = useState('');
+
+    const colorSearch = [
+        'red','orange','green','turquoise','blue','lilac','pink'
+    ];
+
     useEffect( () => {
         getSearch();
+        getWallpaper();
     }, [])
 
     const showLinkCopyModal = () => {
@@ -47,6 +53,10 @@ const Search = () => {
 
     const closeImageViewModal = (imageURL) => {
         document.querySelector(`.${imageURL}`).style.display = 'none'
+    }
+
+    const handleSearch = (e) => {
+        setSearch(e.target.value)
     }
 
     const getSearch = async () => {
@@ -71,6 +81,15 @@ const Search = () => {
         setFetching(false)
     }
 
+    const getWallpaper = async (e) => {
+        await axios.get(`https://pixabay.com/api/?key=${PIXABAY_KEY}&q=color&per_page=200&colors=${Math.floor(Math.random() * colorSearch.length)}&orientation=horizontal&image_type=photo`)
+            .then(response => {
+                console.log(response.data.hits)
+                setMyBackground(response.data.hits[Math.floor(Math.random() * response.data.hits.length)].largeImageURL)
+            })
+            .catch(err => console.log(err))
+    }
+
     const download = (url, name) => {
 
         if (!url) {
@@ -93,8 +112,54 @@ const Search = () => {
             .catch(() => setError(true));
     };
 
+    const saveImage = async (e) => {
+        e.preventDefault();
+
+        if (localStorage.getItem('auth-token') === null && localStorage.getItem('google-auth-token') === null) {
+            setSaveModalMessage('Login to save photos to collections')
+            showImageSaveModal();
+            return;
+        } else {
+            const newPhoto = {
+                photoID: e.target.getAttribute('data-photoid'),
+                // userID: e.target.getAttribute('data-photoid'),
+                altDescription: e.target.getAttribute('data-altdescription'),
+                urlsSmall: e.target.getAttribute('data-urlssmall'),
+                urlsRegular: e.target.getAttribute('data-urlsregular'),
+                urlsThumb: e.target.getAttribute('data-urlsthumb'),
+                urlsRaw: e.target.getAttribute('data-urlsraw')
+            };
+
+            let headers;
+            if (localStorage.getItem('auth-token')) {
+                headers = {
+                    headers: {
+                        'auth-token': localStorage.getItem('auth-token')
+                    }
+                };
+            };
+            if (localStorage.getItem('google-auth-token')) {
+                headers = {
+                    headers: {
+                        'google-auth-token': localStorage.getItem('google-auth-token'),
+                        'email' : localStorage.getItem('google-email')
+                    }
+                };
+            };
+
+            await axios.post(`http://localhost:5000/collections/add`, newPhoto, headers)
+                .then(res => {
+                    console.log(res)
+                    setSaveModalMessage(res.data)
+                    showImageSaveModal()
+                })
+                .catch(err => console.log(err))
+        }
+    }
+
     return (
         <>
+
             {
                 linkCopyShow
                     ? <div id='modal'>Link Copied!</div>
@@ -103,7 +168,7 @@ const Search = () => {
 
             {
                 imageSaveShow
-                    ? <div id='modal'>Image Saved</div>
+                    ? <div id='modal'>{saveModalMessage}</div>
                     : ''
             }
 
@@ -116,8 +181,27 @@ const Search = () => {
             }
 
             {
+                downloading
+                    ? <div className='downloading'>
+                        <img src={Downloading} alt='downloading'/>
+                    </div>
+                    : ''
+            }
+
+            {
                 images.length === 0
-                    ? fetching ? null : <div><h1 className='no-results text-center mt-5'>No Results Found</h1><h3 className='text-center'>Try another search</h3></div>
+                    ? fetching
+                    ? null
+                    :
+                    <div className="jumbotron jumbotron-fluid h-100 d-flex flex-column align-items-center justify-content-center w-100" style={{backgroundImage: `url(${myBackground})`}}>
+                        <h1 className="display-4 text-left">No Results Found</h1>
+                        <p className='lead text-center'>Try another search</p>
+                        <form className="form-inline mt-3 mb-3 search-form has-search justify-content-center w-100" onSubmit={getSearch}>
+                            <input className="form-control mr-2 home-search-bar" type="search" placeholder="Search for free high-resolution photos" aria-label="Search"  onChange={handleSearch} value={search} />
+                            <button className="btn btn-primary my-2 my-sm-0 search-button" type="submit"><i className="fas fa-search"></i></button>
+                        </form>
+                    </div>
+                    // <div><h1 className='no-results text-center mt-5'>No Results Found</h1><h3 className='text-center'>Try another search</h3></div>
                     : fetching ? null :
                     <div className='image-container mt-4'>
                         {
@@ -127,8 +211,14 @@ const Search = () => {
                                          srcSet={`${image.urls.regular} 1200w, ${image.urls.small} 768w, ${image.urls.small} 400w, ${image.urls.thumb} 200w`}
                                     />
                                     <div className="card-img-overlay">
-                                        <button className="card-button btn btn-primary" onClick={showImageSaveModal} data-tip='Save To Collections'>
-                                            <i className="fas fa-plus"></i>
+                                        <button className="card-button btn btn-primary" onClick={saveImage} data-tip='Save To Collections'
+                                                data-photoid={image.id} data-userid={''} data-altdescription={image.alt_description} data-urlssmall={image.urls.small}
+                                                data-urlsraw={image.urls.raw} data-urlsregular={image.urls.regular} data-urlsthumb={image.urls.thumb}
+                                        >
+                                            <i className="fas fa-plus"
+                                               data-photoid={image.id} data-userid={''} data-altdescription={image.alt_description} data-urlssmall={image.urls.small}
+                                               data-urlsraw={image.urls.raw} data-urlsregular={image.urls.regular} data-urlsthumb={image.urls.thumb}
+                                            ></i>
                                         </button>
 
                                         <button className="card-button btn btn-primary copy-image" onClick={() => download(image.urls.raw, lastSearch + '.png')}>
@@ -152,8 +242,14 @@ const Search = () => {
                                             <button className="card-button btn btn-danger" style={{color: "red"}} onClick={() => closeImageViewModal(`dc${image.id}`)}>
                                                 <i className="fas fa-times"></i>
                                             </button>
-                                            <button className="card-button btn btn-primary" onClick={showImageSaveModal}>
-                                                <i className="fas fa-plus"></i>
+                                            <button className="card-button btn btn-primary" onClick={saveImage}
+                                                    data-photoid={image.id} data-userid={''} data-altdescription={image.alt_description} data-urlssmall={image.urls.small}
+                                                    data-urlsraw={image.urls.raw} data-urlsregular={image.urls.regular} data-urlsthumb={image.urls.thumb}
+                                            >
+                                                <i className="fas fa-plus"
+                                                   data-photoid={image.id} data-userid={''} data-altdescription={image.alt_description} data-urlssmall={image.urls.small}
+                                                   data-urlsraw={image.urls.raw} data-urlsregular={image.urls.regular} data-urlsthumb={image.urls.thumb}
+                                                ></i>
                                             </button>
                                             <button className="card-button btn btn-primary copy-image" onClick={() => download(image.urls.raw, sessionStorage.getItem('search') + '.png')}>
                                             <i className="fas fa-arrow-down"></i>

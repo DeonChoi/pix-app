@@ -1,11 +1,14 @@
-import React, {useState} from "react";
-import GoogleBtn from "./GoogleBtn";
+import React, {useContext, useState} from "react";
+import axios from 'axios';
+import {GoogleLogin} from "react-google-login";
+import {Context} from "./Context";
 
-const Register = () => {
+const Register = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const {GOOGLE_CLIENT_ID} = useContext(Context);
 
     const handleEmail = (e) => {
         setEmail(e.target.value.trim())
@@ -20,27 +23,45 @@ const Register = () => {
         setLastName(e.target.value.trim())
     }
 
+    const register = async (response) => {
+        if (response.tokenId) {
+            // localStorage.setItem('google-auth-token', response.tokenId);
+            // localStorage.setItem('google-email', response.profileObj.email);
+            const newUser = {
+                firstName: response.profileObj.givenName,
+                lastName: response.profileObj.familyName,
+                email: response.profileObj.email,
+                // password: generator.generate({length: 12, numbers: true })
+            }
+            await axios.post('http://localhost:5000/google/register', newUser)
+                .then(res => {
+                    console.log(res)
+                    console.log('Logged in')
+                    props.history.push('../login')
+                })
+                .catch(err => console.log(err))
+            props.history.push('../login')
+        }
+        console.log(response)
+    }
+    const handleLoginFailure = response => {
+        alert('Failed to log in')
+    }
     const onSubmit = async (e) => {
         e.preventDefault();
-        const userLogin = {
-            email,
-            password,
+        const newUser = {
             firstName,
-            lastName
+            lastName,
+            email,
+            password
         };
-        console.log(userLogin)
-        // await axios.post('/user/login', userLogin)
-        //     .then( res => {
-        //         // console.log(res);
-        //         localStorage.setItem('auth-token', res.data);
-        //         console.log('Logged In');
-        //         props.history.push('..');
-        //         window.location.reload();
-        //     })
-        //     .catch( err => {
-        //         console.error(err);
-        //         setLoginError('Invalid Email or Password');
-        //     });
+        await axios.post('http://localhost:5000/user/register', newUser)
+            .then(res => {
+                console.log(res)
+                console.log('Logged in')
+                props.history.push('../login')
+            })
+            .catch(err => console.log(err))
     };
     return (
         <div className='d-flex justify-content-center mt-5 flex-column align-items-center'>
@@ -84,7 +105,14 @@ const Register = () => {
 
             <br/>
             <p>or</p>
-            <GoogleBtn/>
+            <GoogleLogin
+                clientId={ GOOGLE_CLIENT_ID }
+                buttonText='Sign up with Google'
+                onSuccess={ register }
+                onFailure={ handleLoginFailure }
+                cookiePolicy={ 'single_host_origin' }
+                responseType='code,token'
+            />
         </div>
     )
 }
