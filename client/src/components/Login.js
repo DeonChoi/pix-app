@@ -35,6 +35,7 @@ const Login = (props) => {
         // console.log(response)
     }
     const handleLoginFailure = response => {
+        console.log(response);
         console.log('Failed to log in')
     }
 
