@@ -16,10 +16,10 @@ const Login = (props) => {
             const userLogin = {
                 email: response.profileObj.email,
             }
-            console.log(response)
-            await axios.post('http://localhost:5000/google/login', userLogin)
+            // console.log(response)
+            await axios.post('/google/login', userLogin)
                 .then( res => {
-                    console.log(res);
+                    // console.log(res);
                     console.log('Logged In');
                     localStorage.setItem('google-auth-token', response.tokenId);
                     localStorage.setItem('google-email', response.profileObj.email);
@@ -29,10 +29,10 @@ const Login = (props) => {
                 .catch( err => console.error(err));
 
             console.log('logging in')
-            console.log(response.profileObj.email)
+            // console.log(response.profileObj.email)
             props.history.push('..')
         }
-        console.log(response)
+        // console.log(response)
     }
     const handleLoginFailure = response => {
         alert('Failed to log in')
@@ -51,9 +51,9 @@ const Login = (props) => {
             email,
             password
         };
-        await axios.post('http://localhost:5000/user/login', userLogin)
+        await axios.post('/user/login', userLogin)
             .then( res => {
-                console.log(res);
+                // console.log(res);
                 console.log('Logged In');
                 localStorage.setItem('auth-token', res.data.token);
                 localStorage.setItem('email', res.data.email)

@@ -18,11 +18,11 @@ const GoogleBtn = (props) => {
 
     const logout = response => {
         console.log(response)
-        localStorage.removeItem('google-auth-token');
+        // localStorage.removeItem('google-auth-token');
         localStorage.clear();
         // sessionStorage.clear();
         props.history.push('..')
-        window.location.reload()
+        // window.location.reload()
 
 
     }

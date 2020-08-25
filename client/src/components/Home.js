@@ -94,9 +94,10 @@ const Home = () => {
                 };
             };
 
-            await axios.post(`http://localhost:5000/collections/add`, newPhoto, headers)
+            await axios.post(`/collections/add`, newPhoto, headers)
                 .then(res => {
-                    console.log(res)
+                    // console.log(res)
+                    console.log('Image Saved')
                     setSaveModalMessage(res.data)
                     showImageSaveModal()
                 })
@@ -114,7 +115,7 @@ const Home = () => {
         ])
             .then(
                 axios.spread((...responses) => {
-                    console.log([...responses[0].data.results, ...responses[1].data.results, ...responses[2].data.results])
+                    // console.log([...responses[0].data.results, ...responses[1].data.results, ...responses[2].data.results])
                     setImages([...responses[0].data.results, ...responses[1].data.results, ...responses[2].data.results])
                     setFetching(false)
                 })
@@ -127,7 +128,7 @@ const Home = () => {
     const getWallpaper = async (e) => {
         await axios.get(`https://pixabay.com/api/?key=${PIXABAY_KEY}&q=color&per_page=200&colors=${Math.floor(Math.random() * colorSearch.length)}&orientation=horizontal&image_type=photo`)
             .then(response => {
-                console.log(response.data.hits)
+                // console.log(response.data.hits)
                 setMyBackground(response.data.hits[Math.floor(Math.random() * response.data.hits.length)].largeImageURL)
             })
             .catch(err => console.log(err))

@@ -34,7 +34,7 @@ router.post('/register', async (req, res) => {
 
     const emailExist = await User.findOne({email: req.body.email});
     if (emailExist) {
-        console.log(emailExist)
+        // console.log(emailExist)
         return res.status(400).send({
             message: 'This email already exists!'
         });
@@ -52,7 +52,7 @@ router.post('/register', async (req, res) => {
     try {
         await user.save();
         res.send({user: user._id});
-        console.log(user)
+        // console.log(user)
         console.log('User Saved')
     }
     catch (err) {

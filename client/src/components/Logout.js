@@ -13,7 +13,7 @@ const Logout = (props) => {
     })
 
     const logout = response => {
-        console.log(response)
+        // console.log(response)
         props.history.push('..')
         // localStorage.removeItem('google-auth-token');
         // localStorage.removeItem('google-email');

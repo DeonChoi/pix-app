@@ -25,24 +25,21 @@ const Register = (props) => {
 
     const register = async (response) => {
         if (response.tokenId) {
-            // localStorage.setItem('google-auth-token', response.tokenId);
-            // localStorage.setItem('google-email', response.profileObj.email);
             const newUser = {
                 firstName: response.profileObj.givenName,
                 lastName: response.profileObj.familyName,
                 email: response.profileObj.email,
-                // password: generator.generate({length: 12, numbers: true })
             }
-            await axios.post('http://localhost:5000/google/register', newUser)
+            await axios.post('/google/register', newUser)
                 .then(res => {
-                    console.log(res)
+                    // console.log(res)
                     console.log('Logged in')
                     props.history.push('../login')
                 })
                 .catch(err => console.log(err))
             props.history.push('../login')
         }
-        console.log(response)
+        // console.log(response)
     }
     const handleLoginFailure = response => {
         alert('Failed to log in')
@@ -55,9 +52,9 @@ const Register = (props) => {
             email,
             password
         };
-        await axios.post('http://localhost:5000/user/register', newUser)
+        await axios.post('/user/register', newUser)
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 console.log('Logged in')
                 props.history.push('../login')
             })

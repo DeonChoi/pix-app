@@ -79,7 +79,7 @@ const App = () => {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent" style={{justifyContent:"flex-end"}}>
                             <Link to={'/collections'} className="nav-link text-primary">collections <span className="sr-only">(current)</span></Link>
                             <div className="nav-item dropdown">
-                                <Link className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                <Link className="nav-link dropdown-toggle" to={'#'} id="navbarDropdownMenuLink"
                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {localStorage.getItem('google-email') || localStorage.getItem('email')}
                                 </Link>

@@ -48,9 +48,10 @@ const Collections = () => {
             };
         };
 
-        await axios.get('http://localhost:5000/collections/get', headers)
+        await axios.get('/collections/get', headers)
             .then(res => {
-                console.log(res)
+                // console.log(res)
+                console.log('Images Retrieved')
                 setImages(res.data)
                 setFetching(false)
             })
@@ -75,10 +76,10 @@ const Collections = () => {
                 }
             };
         };
-        await axios.delete('http://localhost:5000/collections/' + id, headers)
+        await axios.delete('/collections/' + id, headers)
             .then(res => {
-                console.log(res)
-                // setImages(res.data)
+                // console.log(res)
+                console.log('Image Deleted')
                 setImages( images.filter( image => image.photoID !== id));
                 showDeleteImageModal()
             })
@@ -130,7 +131,7 @@ const Collections = () => {
     const getWallpaper = async (e) => {
         await axios.get(`https://pixabay.com/api/?key=${PIXABAY_KEY}&q=color&per_page=200&colors=${Math.floor(Math.random() * colorSearch.length)}&orientation=horizontal&image_type=photo`)
             .then(response => {
-                console.log(response.data.hits)
+                // console.log(response.data.hits)
                 setMyBackground(response.data.hits[Math.floor(Math.random() * response.data.hits.length)].largeImageURL)
             })
             .catch(err => console.log(err))
@@ -205,10 +206,6 @@ const Collections = () => {
                                         <button className="btn btn-primary my-2 my-sm-0 search-button" type="submit"><i className="fas fa-search"></i></button>
                                     </form>
                                 </div>
-                                {/*<div>*/}
-                                {/*    <h1 className='no-results text-center mt-5'>Collection Empty</h1>*/}
-                                {/*    <h3 className='text-center'>Try searching for some photos</h3>*/}
-                                {/*</div>*/}
                             </>
                         : fetching ? null :
                         <div className='image-container mt-4'>
@@ -248,10 +245,6 @@ const Collections = () => {
                                                                 onClick={() => closeImageViewModal(`dc${image.photoID}`)}>
                                                             <i className="fas fa-times"></i>
                                                         </button>
-                                                        {/*<button className="card-button btn btn-primary"*/}
-                                                        {/*        onClick={showDeleteImageModal}>*/}
-                                                        {/*    <i className="fas fa-plus"></i>*/}
-                                                        {/*</button>*/}
                                                         <button className="card-button btn btn-primary copy-image"
                                                                 onClick={() => download(image.urlsRaw, image.altDescription + '.png')}>
                                                         <i className="fas fa-arrow-down"></i>

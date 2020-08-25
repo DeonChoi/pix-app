@@ -2,7 +2,6 @@ const router = require('express').Router();
 const verify = require('./verifyToken');
 
 const GoogleUser = require('../models/google.user.model');
-const User = require('../models/user.model');
 const Photo = require('../models/photo.model');
 
 router.post('/add', verify, async (req, res) => {
@@ -80,7 +79,7 @@ router.get('/get', verify, async (req, res) => {
     if (!req.headers.email) {
         await Photo.find({userID: req.user._id})
             .then(photos => {
-                console.log(photos)
+                // console.log(photos)
                 res.json(photos)
             })
             .catch(err => res.status(400).json('Error: ' + err));
@@ -90,7 +89,7 @@ router.get('/get', verify, async (req, res) => {
 
         await Photo.find({userID: googleUser._id})
             .then(photos => {
-                console.log(photos)
+                // console.log(photos)
                 res.json(photos)
             })
             .catch(err => res.status(400).json('Error: ' + err));
