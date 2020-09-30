@@ -110,13 +110,12 @@ const Home = () => {
 
         await axios.all([
             await axios.get(`https://api.unsplash.com/search/photos/?page=1&per_page=250&query=${search}&client_id=${ACCESS_KEY}`),
-            await axios.get(`https://api.unsplash.com/search/photos/?page=2&per_page=250&query=${search}&client_id=${ACCESS_KEY}`),
-            await axios.get(`https://api.unsplash.com/search/photos/?page=3&per_page=250&query=${search}&client_id=${ACCESS_KEY}`)
+            await axios.get(`https://api.unsplash.com/search/photos/?page=2&per_page=250&query=${search}&client_id=${ACCESS_KEY}`)
         ])
             .then(
                 axios.spread((...responses) => {
                     // console.log([...responses[0].data.results, ...responses[1].data.results, ...responses[2].data.results])
-                    setImages([...responses[0].data.results, ...responses[1].data.results, ...responses[2].data.results])
+                    setImages([...responses[0].data.results, ...responses[1].data.results])
                     setFetching(false)
                 })
             )
