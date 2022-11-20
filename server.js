@@ -6,7 +6,7 @@ const path = require("path");
 const cors = require("cors");
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 6000;
 
 app.use(express.json());
 app.use(cors());
@@ -38,6 +38,6 @@ if (process.env.NODE_ENV === "production") {
 	});
 }
 
-app.listen(5200, () => {
-	console.log(`Server is running at http://localhost:5200`);
+app.listen(port, () => {
+	console.log(`Server is running at http://localhost:${port}`);
 });
