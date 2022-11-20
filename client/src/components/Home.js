@@ -75,6 +75,7 @@ const Home = () => {
 	};
 
 	const saveImage = async (e) => {
+		console.log(e.target);
 		e.preventDefault();
 
 		if (localStorage.getItem("auth-token") === null) {
@@ -85,7 +86,7 @@ const Home = () => {
 			const newPhoto = {
 				photoID: e.target.getAttribute("data-photoid"),
 				// userID: e.target.getAttribute('data-photoid'),
-				altDescription: e.target.getAttribute("data-altdescription"),
+				altDescription: e.target.getAttribute("data-altdescription") || "",
 				urlsSmall: e.target.getAttribute("data-urlssmall"),
 				urlsRegular: e.target.getAttribute("data-urlsregular"),
 				urlsThumb: e.target.getAttribute("data-urlsthumb"),
