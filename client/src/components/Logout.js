@@ -1,19 +1,17 @@
-import { useEffect} from 'react';
+import { useEffect } from "react";
 
 const Logout = (props) => {
+	useEffect(() => {
+		console.log("Logging out");
+		logout();
+	});
 
-    useEffect( () => {
-        console.log('logging out')
-        logout()
-    })
+	const logout = (response) => {
+		localStorage.clear();
+		props.history.push("..");
+	};
 
-    const logout = response => {
-        localStorage.clear();
-        props.history.push('..')
-    }
-
-    return null;
-
-}
+	return null;
+};
 
 export default Logout;

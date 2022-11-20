@@ -78,7 +78,6 @@ const Search = () => {
 			])
 			.then(
 				axios.spread((...responses) => {
-					// console.log([...responses[0].data.results, ...responses[1].data.results, ...responses[2].data.results])
 					setImages([
 						...responses[0].data.results,
 						...responses[1].data.results,
@@ -101,7 +100,6 @@ const Search = () => {
 				)}&orientation=horizontal&image_type=photo`
 			)
 			.then((response) => {
-				// console.log(response.data.hits)
 				setMyBackground(
 					response.data.hits[
 						Math.floor(Math.random() * response.data.hits.length)
@@ -162,7 +160,6 @@ const Search = () => {
 			await axios
 				.post(`/collections/add`, newPhoto, headers)
 				.then((res) => {
-					// console.log(res)
 					console.log("Image Saved");
 					setSaveModalMessage(res.data);
 					showImageSaveModal();

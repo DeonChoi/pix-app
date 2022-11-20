@@ -22,7 +22,6 @@ const Login = (props) => {
 		await axios
 			.post("/user/login", userLogin)
 			.then((res) => {
-				// console.log(res);
 				console.log("Logged In");
 				localStorage.setItem("auth-token", res.data.token);
 				localStorage.setItem("email", res.data.email);

@@ -45,7 +45,6 @@ router.get("/get", verify, async (req, res) => {
 	if (!req.headers.email) {
 		await Photo.find({ userID: req.user._id })
 			.then((photos) => {
-				// console.log(photos)
 				res.json(photos);
 			})
 			.catch((err) => res.status(400).json("Error: " + err));

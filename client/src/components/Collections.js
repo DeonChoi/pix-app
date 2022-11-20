@@ -48,7 +48,6 @@ const Collections = () => {
 		await axios
 			.get("/collections/get", headers)
 			.then((res) => {
-				// console.log(res)
 				console.log("Images Retrieved");
 				setImages(res.data);
 				setFetching(false);
@@ -70,7 +69,6 @@ const Collections = () => {
 		await axios
 			.delete("/collections/" + id, headers)
 			.then((res) => {
-				// console.log(res)
 				console.log("Image Deleted");
 				setImages(images.filter((image) => image.photoID !== id));
 				showDeleteImageModal();
@@ -127,7 +125,6 @@ const Collections = () => {
 				)}&orientation=horizontal&image_type=photo`
 			)
 			.then((response) => {
-				// console.log(response.data.hits)
 				setMyBackground(
 					response.data.hits[
 						Math.floor(Math.random() * response.data.hits.length)

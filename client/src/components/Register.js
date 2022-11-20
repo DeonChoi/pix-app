@@ -31,7 +31,6 @@ const Register = (props) => {
 		await axios
 			.post("/user/register", newUser)
 			.then((res) => {
-				// console.log(res)
 				console.log("Logged in");
 				props.history.push("../login");
 			})
