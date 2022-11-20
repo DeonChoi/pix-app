@@ -35,7 +35,6 @@ const App = () => {
 
 	const PIXABAY_KEY = "17990511-4817078a8e0b7192cbe1dc270";
 	const ACCESS_KEY = "IJ1yZh7pdWGg1Xf_GDvalE5UdrAOJJAUmCeyhS8BmoA";
-	const GOOGLE_CLIENT_ID = `47793811117-cill4k7dhjeugf928f6ai390ghvh4ukm.apps.googleusercontent.com`;
 
 	const handleSearch = (e) => {
 		setSearch(e.target.value);
@@ -105,8 +104,7 @@ const App = () => {
 									data-toggle="dropdown"
 									aria-haspopup="true"
 									aria-expanded="false">
-									{localStorage.getItem("google-email") ||
-										localStorage.getItem("email")}
+									{localStorage.getItem("email")}
 								</Link>
 								<div
 									className="dropdown-menu"
@@ -151,7 +149,6 @@ const App = () => {
 						setFetching,
 						ACCESS_KEY,
 						PIXABAY_KEY,
-						GOOGLE_CLIENT_ID,
 					}}>
 					<Route exact path="/" component={Home} />
 					<Route exact path="/search" component={Search} />
