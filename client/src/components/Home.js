@@ -58,13 +58,13 @@ const Home = () => {
 		setLinkCopyShow(true);
 		setTimeout(() => {
 			setLinkCopyShow(false);
-		}, 1500);
+		}, 2000);
 	};
 	const showImageSaveModal = () => {
 		setImageSaveShow(true);
 		setTimeout(() => {
 			setImageSaveShow(false);
-		}, 1500);
+		}, 2000);
 	};
 	const showImageViewModal = (imageURL) => {
 		document.querySelector(`.${imageURL}`).style = null;

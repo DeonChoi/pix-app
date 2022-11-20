@@ -101,13 +101,13 @@ const Collections = () => {
 		setLinkCopyShow(true);
 		setTimeout(() => {
 			setLinkCopyShow(false);
-		}, 1500);
+		}, 2000);
 	};
 	const showDeleteImageModal = () => {
 		setDeleteImageShow(true);
 		setTimeout(() => {
 			setDeleteImageShow(false);
-		}, 1500);
+		}, 2000);
 	};
 	const showImageViewModal = (imageURL) => {
 		document.querySelector(`.${imageURL}`).style = null;
