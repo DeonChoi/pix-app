@@ -28,6 +28,7 @@ router.post('/login', async (req, res) => {
 
 router.post('/register', async (req, res) => {
     const {error} = registerValidation(req.body);
+    console.log(error)
     if (error) {
         return res.status(400).send(error.details[0].message);
     };
