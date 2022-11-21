@@ -75,7 +75,6 @@ const Home = () => {
 	};
 
 	const saveImage = async (e) => {
-		console.log(e.target);
 		e.preventDefault();
 
 		if (localStorage.getItem("auth-token") === null) {
