@@ -85,7 +85,6 @@ const Home = () => {
 		} else {
 			const newPhoto = {
 				photoID: e.target.getAttribute("data-photoid"),
-				// userID: e.target.getAttribute('data-photoid'),
 				altDescription: e.target.getAttribute("data-altdescription") || "",
 				urlsSmall: e.target.getAttribute("data-urlssmall"),
 				urlsRegular: e.target.getAttribute("data-urlsregular"),

@@ -140,7 +140,6 @@ const Search = () => {
 		} else {
 			const newPhoto = {
 				photoID: e.target.getAttribute("data-photoid"),
-				// userID: e.target.getAttribute('data-photoid'),
 				altDescription: e.target.getAttribute("data-altdescription") || "",
 				urlsSmall: e.target.getAttribute("data-urlssmall"),
 				urlsRegular: e.target.getAttribute("data-urlsregular"),
@@ -214,8 +213,7 @@ const Search = () => {
 						</form>
 					</div>
 				)
-			) : // <div><h1 className='no-results text-center mt-5'>No Results Found</h1><h3 className='text-center'>Try another search</h3></div>
-			fetching ? null : (
+			) : fetching ? null : (
 				<div className="image-container mt-4">
 					{images.map((image) => (
 						<div className="image-card" key={image.id}>
