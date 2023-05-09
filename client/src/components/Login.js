@@ -5,12 +5,15 @@ import axios from "axios";
 const Login = (props) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [error, setError] = useState(false);
 
 	const handleEmail = (e) => {
 		setEmail(e.target.value);
+		e.target.style.border = "none";
 	};
 	const handlePassword = (e) => {
 		setPassword(e.target.value);
+		e.target.style.border = "none";
 	};
 
 	const onSubmit = async (e) => {
@@ -19,6 +22,7 @@ const Login = (props) => {
 			email,
 			password,
 		};
+		setError(false);
 		await axios
 			.post("/user/login", userLogin)
 			.then((res) => {
@@ -27,7 +31,10 @@ const Login = (props) => {
 				localStorage.setItem("email", res.data.email);
 				props.history.push("..");
 			})
-			.catch((err) => console.error(err));
+			.catch((err) => {
+				setError(true);
+				console.error(err);
+			});
 	};
 
 	return (
@@ -44,6 +51,7 @@ const Login = (props) => {
 						placeholder="johndoe@gmail.com"
 						onChange={handleEmail}
 						autoComplete="true"
+						style={error ? { border: "2px solid red" } : {}}
 					/>
 					<small id="emailHelp" className="form-text text-muted">
 						We'll never share your email with anyone.
@@ -62,11 +70,19 @@ const Login = (props) => {
 						onChange={handlePassword}
 						pattern=".{6,}"
 						autoComplete="true"
+						style={error ? { border: "2px solid red" } : {}}
 					/>
 					<small id="passwordHelp" className="form-text text-muted">
 						We'll never share your password with anyone.
 					</small>
 				</div>
+				{error ? (
+					<small className="form-text text-danger text-center">
+						Invalid Email or Password
+					</small>
+				) : (
+					""
+				)}
 				<button type="submit" className="btn btn-primary">
 					Login
 				</button>

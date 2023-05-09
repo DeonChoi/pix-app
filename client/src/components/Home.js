@@ -12,14 +12,20 @@ import axios from "axios";
 const Home = () => {
 	const defaultSearchTerms = [
 		"Mexico City",
-		"Washington D.C.",
+		"Rio de Janeiro",
+		"Madrid",
 		"London",
-		"New York City",
 		"Paris",
 		"Amsterdam",
+		"New York City",
+		"Washington D.C.",
 		"San Francisco",
 		"Los Angeles",
 		"Seoul",
+		"Singapore",
+		"Hong Kong",
+		"Tokyo",
+		"Doha",
 	];
 	const colorSearch = [
 		"red",
@@ -139,9 +145,9 @@ const Home = () => {
 	const getWallpaper = async (e) => {
 		await axios
 			.get(
-				`https://pixabay.com/api/?key=${PIXABAY_KEY}&q=color&per_page=200&colors=${Math.floor(
+				`https://pixabay.com/api/?key=${PIXABAY_KEY}&q=linear&per_page=200&colors=${Math.floor(
 					Math.random() * colorSearch.length
-				)}&orientation=horizontal&image_type=photo`
+				)}&orientation=horizontal&image_type=photo&category=backgrounds`
 			)
 			.then((response) => {
 				setMyBackground(
@@ -226,7 +232,7 @@ const Home = () => {
 				</form>
 			</div>
 
-			{linkCopyShow ? <div id="modal">Link Copied!</div> : ""}
+			{linkCopyShow ? <div id="modal">Link Copied</div> : ""}
 
 			{imageSaveShow ? (
 				// ? <div id='modal'>Image Saved</div>
@@ -290,7 +296,7 @@ const Home = () => {
 								</button>
 
 								<button
-									className="card-button btn btn-primary copy-image"
+									className="card-button btn btn-primary"
 									onClick={() => download(image.urls.raw, `${search}.png`)}>
 									<i className="fas fa-arrow-down"></i>
 								</button>
@@ -304,7 +310,7 @@ const Home = () => {
 								</CopyToClipboard>
 
 								<button
-									className="card-button btn btn-primary view-image"
+									className="card-button btn btn-primary"
 									onClick={() => showImageViewModal(`dc${image.id}`)}>
 									<i className="fas fa-search"></i>
 								</button>
@@ -342,7 +348,7 @@ const Home = () => {
 											data-urlsthumb={image.urls.thumb}></i>
 									</button>
 									<button
-										className="card-button btn btn-primary copy-image"
+										className="card-button btn btn-primary"
 										onClick={() => download(image.urls.raw, `${search}.png`)}>
 										<i className="fas fa-arrow-down"></i>
 									</button>

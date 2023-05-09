@@ -12,7 +12,7 @@ router.post("/add", verify, async (req, res) => {
 			let photo = await Photo.findOne({ photoID, userID });
 
 			if (photo) {
-				return res.json("Image already saved!");
+				return res.json("Image already saved");
 			} else {
 				photo = new Photo({
 					photoID: photoID,
@@ -27,7 +27,7 @@ router.post("/add", verify, async (req, res) => {
 				photo
 					.save()
 					.then(() => {
-						res.json("Image saved!");
+						res.json("Image saved");
 					})
 					.catch((err) => {
 						console.log(err);
@@ -57,7 +57,7 @@ router.delete("/:id", verify, async (req, res) => {
 			photoID: req.params.id,
 			userID: req.user._id,
 		})
-			.then((photos) => res.json("Photo deleted!"))
+			.then((photos) => res.json("Photo deleted"))
 			.catch((err) => res.status(400).json("Error: " + err));
 	}
 });
