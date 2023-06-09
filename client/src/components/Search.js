@@ -214,73 +214,24 @@ const Search = () => {
 					</div>
 				)
 			) : fetching ? null : (
-				<div className="image-container mt-4">
-					{images.map((image) => (
-						<div className="image-card" key={image.id}>
-							<img
-								className="image"
-								src={image.urls.small}
-								alt={image.alt_description}
-								srcSet={`${image.urls.regular} 1200w, ${image.urls.small} 768w, ${image.urls.small} 400w, ${image.urls.thumb} 200w`}
-							/>
-							<div className="card-img-overlay">
-								<button
-									className="card-button btn btn-primary"
-									onClick={saveImage}
-									data-tip="Save To Collections"
-									data-photoid={image.id}
-									data-userid={""}
-									data-altdescription={image.alt_description}
-									data-urlssmall={image.urls.small}
-									data-urlsraw={image.urls.raw}
-									data-urlsregular={image.urls.regular}
-									data-urlsthumb={image.urls.thumb}>
-									<i
-										className="fas fa-plus"
-										data-photoid={image.id}
-										data-userid={""}
-										data-altdescription={image.alt_description}
-										data-urlssmall={image.urls.small}
-										data-urlsraw={image.urls.raw}
-										data-urlsregular={image.urls.regular}
-										data-urlsthumb={image.urls.thumb}></i>
-								</button>
-
-								<button
-									className="card-button btn btn-primary"
-									onClick={() => download(image.urls.raw, lastSearch + ".png")}>
-									<i className="fas fa-arrow-down"></i>
-								</button>
-
-								<CopyToClipboard text={image.urls.raw}>
-									<button
-										className="card-button btn btn-primary"
-										onClick={showLinkCopyModal}>
-										<i className="fas fa-share"></i>
-									</button>
-								</CopyToClipboard>
-
-								<button
-									className="card-button btn btn-primary"
-									onClick={() => showImageViewModal(`dc${image.id}`)}>
-									<i className="fas fa-search"></i>
-								</button>
-							</div>
-
-							<div
-								id="image-modal"
-								className={`dc${image.id}`}
-								style={{ display: "none" }}>
-								<span className="modal-buttons">
-									<button
-										className="card-button btn btn-danger"
-										style={{ color: "red" }}
-										onClick={() => closeImageViewModal(`dc${image.id}`)}>
-										<i className="fas fa-times"></i>
-									</button>
+				<>
+					<div className="mt-2">
+						Showing {images.length} results for "{lastSearch}"
+					</div>
+					<div className="image-container mt-2">
+						{images.map((image) => (
+							<div className="image-card" key={image.id}>
+								<img
+									className="image"
+									src={image.urls.small}
+									alt={image.alt_description}
+									srcSet={`${image.urls.regular} 1200w, ${image.urls.small} 768w, ${image.urls.small} 400w, ${image.urls.thumb} 200w`}
+								/>
+								<div className="card-img-overlay">
 									<button
 										className="card-button btn btn-primary"
 										onClick={saveImage}
+										data-tip="Save To Collections"
 										data-photoid={image.id}
 										data-userid={""}
 										data-altdescription={image.alt_description}
@@ -298,16 +249,15 @@ const Search = () => {
 											data-urlsregular={image.urls.regular}
 											data-urlsthumb={image.urls.thumb}></i>
 									</button>
+
 									<button
 										className="card-button btn btn-primary"
 										onClick={() =>
-											download(
-												image.urls.raw,
-												sessionStorage.getItem("search") + ".png"
-											)
+											download(image.urls.raw, lastSearch + ".png")
 										}>
 										<i className="fas fa-arrow-down"></i>
 									</button>
+
 									<CopyToClipboard text={image.urls.raw}>
 										<button
 											className="card-button btn btn-primary"
@@ -315,16 +265,73 @@ const Search = () => {
 											<i className="fas fa-share"></i>
 										</button>
 									</CopyToClipboard>
-								</span>
-								<img
-									src={image.urls.regular}
-									onClick={() => closeImageViewModal(`dc${image.id}`)}
-									alt={image.alt_description}
-								/>
+
+									<button
+										className="card-button btn btn-primary"
+										onClick={() => showImageViewModal(`dc${image.id}`)}>
+										<i className="fas fa-search"></i>
+									</button>
+								</div>
+
+								<div
+									id="image-modal"
+									className={`dc${image.id}`}
+									style={{ display: "none" }}>
+									<span className="modal-buttons">
+										<button
+											className="card-button btn btn-danger"
+											style={{ color: "red" }}
+											onClick={() => closeImageViewModal(`dc${image.id}`)}>
+											<i className="fas fa-times"></i>
+										</button>
+										<button
+											className="card-button btn btn-primary"
+											onClick={saveImage}
+											data-photoid={image.id}
+											data-userid={""}
+											data-altdescription={image.alt_description}
+											data-urlssmall={image.urls.small}
+											data-urlsraw={image.urls.raw}
+											data-urlsregular={image.urls.regular}
+											data-urlsthumb={image.urls.thumb}>
+											<i
+												className="fas fa-plus"
+												data-photoid={image.id}
+												data-userid={""}
+												data-altdescription={image.alt_description}
+												data-urlssmall={image.urls.small}
+												data-urlsraw={image.urls.raw}
+												data-urlsregular={image.urls.regular}
+												data-urlsthumb={image.urls.thumb}></i>
+										</button>
+										<button
+											className="card-button btn btn-primary"
+											onClick={() =>
+												download(
+													image.urls.raw,
+													sessionStorage.getItem("search") + ".png"
+												)
+											}>
+											<i className="fas fa-arrow-down"></i>
+										</button>
+										<CopyToClipboard text={image.urls.raw}>
+											<button
+												className="card-button btn btn-primary"
+												onClick={showLinkCopyModal}>
+												<i className="fas fa-share"></i>
+											</button>
+										</CopyToClipboard>
+									</span>
+									<img
+										src={image.urls.regular}
+										onClick={() => closeImageViewModal(`dc${image.id}`)}
+										alt={image.alt_description}
+									/>
+								</div>
 							</div>
-						</div>
-					))}
-				</div>
+						))}
+					</div>
+				</>
 			)}
 		</>
 	);
